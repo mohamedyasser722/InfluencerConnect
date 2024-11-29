@@ -9,6 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0AC282A8-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluencerConnect.Domain", "InfluencerConnect.Domain\InfluencerConnect.Domain.csproj", "{E24E7AE3-7DDE-4CE1-B077-AB37C54BDACB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluencerConnect.Application", "InfluencerConnect.Application\InfluencerConnect.Application.csproj", "{35801853-B26E-4645-AA46-BB4A263B4E05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluencerConnect.Infrastructure", "InfluencerConnect.Infrastructure\InfluencerConnect.Infrastructure.csproj", "{52680EDE-4328-47AF-B154-BB4B70BE9E62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluencerConnect.Api", "InfluencerConnect.Api\InfluencerConnect.Api.csproj", "{AE3796E4-9734-4200-A97C-D5B204FA3B50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +25,26 @@ Global
 		{E24E7AE3-7DDE-4CE1-B077-AB37C54BDACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E24E7AE3-7DDE-4CE1-B077-AB37C54BDACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E24E7AE3-7DDE-4CE1-B077-AB37C54BDACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35801853-B26E-4645-AA46-BB4A263B4E05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35801853-B26E-4645-AA46-BB4A263B4E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35801853-B26E-4645-AA46-BB4A263B4E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35801853-B26E-4645-AA46-BB4A263B4E05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52680EDE-4328-47AF-B154-BB4B70BE9E62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52680EDE-4328-47AF-B154-BB4B70BE9E62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52680EDE-4328-47AF-B154-BB4B70BE9E62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52680EDE-4328-47AF-B154-BB4B70BE9E62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE3796E4-9734-4200-A97C-D5B204FA3B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE3796E4-9734-4200-A97C-D5B204FA3B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE3796E4-9734-4200-A97C-D5B204FA3B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE3796E4-9734-4200-A97C-D5B204FA3B50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E24E7AE3-7DDE-4CE1-B077-AB37C54BDACB} = {25D1B645-8029-45A6-B5C1-D4DB544047B5}
+		{35801853-B26E-4645-AA46-BB4A263B4E05} = {25D1B645-8029-45A6-B5C1-D4DB544047B5}
+		{52680EDE-4328-47AF-B154-BB4B70BE9E62} = {25D1B645-8029-45A6-B5C1-D4DB544047B5}
+		{AE3796E4-9734-4200-A97C-D5B204FA3B50} = {25D1B645-8029-45A6-B5C1-D4DB544047B5}
 	EndGlobalSection
 EndGlobal
