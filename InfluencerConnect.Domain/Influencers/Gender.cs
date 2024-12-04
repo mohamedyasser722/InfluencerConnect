@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfluencerConnect.Domain.ApplicationUsers;
+namespace InfluencerConnect.Domain.Influencers;
 public enum Gender
 {
     Male,

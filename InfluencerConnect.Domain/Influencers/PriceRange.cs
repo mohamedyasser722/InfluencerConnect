@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Domain.Influencers;
 public sealed class PriceRange
 {
-    public decimal MinPrice { get; }
-    public decimal MaxPrice { get; }
+    public decimal MinPrice { get; init; }
+    public decimal MaxPrice { get; init; }
 
+    private PriceRange() { }
     public PriceRange(decimal minPrice, decimal maxPrice)
     {
         if (minPrice < 0)

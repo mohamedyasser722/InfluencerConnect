@@ -1,7 +1,6 @@
 ﻿using InfluencerConnect.Domain.Abstractions;
 using InfluencerConnect.Domain.ApplicationUsers;
 using InfluencerConnect.Domain.Influencers.Events;
-using InfluencerConnect.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,51 +12,57 @@ namespace InfluencerConnect.Domain.Influencers;
 public sealed class Influencer : Entity
 {
     private Influencer() { }
+
     private Influencer(
-        Guid id,
         ApplicationUser applicationUser,
+        BirthDate birthDate,
+        Gender gender,
         PriceRange priceRange,
-        Bio bio,
-        ProfilePictureUrl profilePictureUrl,
-        List<SocialMediaProfile> socialMediaProfiles
-        ) : base(id)
+        string bio,
+        string profilePictureUrl,
+        ICollection<InfluencerSocialMediaProfile> influencerSocialMediaProfiles
+    ) : base(Guid.NewGuid())
     {
         ApplicationUserId = applicationUser.Id;
         ApplicationUser = applicationUser;
+        BirthDate = birthDate;
+        Gender = gender;
         PriceRange = priceRange;
         Bio = bio;
         ProfilePictureUrl = profilePictureUrl;
-        SocialMediaProfiles = socialMediaProfiles ?? new List<SocialMediaProfile>();
-
+        InfluencerSocialMediaProfiles = influencerSocialMediaProfiles ?? [];
     }
 
-    public string ApplicationUserId { get; set; }  
-    public ApplicationUser ApplicationUser { get; set; }
-    public PriceRange PriceRange { get; set; }
-    public Bio Bio { get; set; }
-    public ProfilePictureUrl ProfilePictureUrl { get; set; }
-    public List<SocialMediaProfile> SocialMediaProfiles { get; set; } = [];
-
-
+    public string ApplicationUserId { get; private set; }
+    public ApplicationUser ApplicationUser { get; private set; }
+    public BirthDate BirthDate { get; private set; }
+    public Gender Gender { get; private set; }
+    public PriceRange PriceRange { get; private set; }
+    public string Bio { get; private set; }
+    public string ProfilePictureUrl { get; private set; }
+    public ICollection<InfluencerSocialMediaProfile> InfluencerSocialMediaProfiles { get; private set; } = [];
 
     public static Influencer Create(
         ApplicationUser applicationUser,
+        BirthDate birthDate,
+        Gender gender,
         PriceRange priceRange,
-        Bio bio,
-        ProfilePictureUrl profilePictureUrl,
-        List<SocialMediaProfile> socialMediaProfiles
-        )
+        string bio,
+        string profilePictureUrl,
+        ICollection<InfluencerSocialMediaProfile> socialMediaProfiles
+    )
     {
         var influencer = new Influencer(
-            Guid.NewGuid(),
             applicationUser,
+            birthDate,
+            gender,
             priceRange,
             bio,
             profilePictureUrl,
             socialMediaProfiles
-            );
+        );
+
         influencer.RaiseDomainEvent(new InfluencerCreatedDomainEvent(influencer.Id));
         return influencer;
     }
-
 }

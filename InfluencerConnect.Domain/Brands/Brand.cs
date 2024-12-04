@@ -1,7 +1,7 @@
 ﻿using InfluencerConnect.Domain.Abstractions;
 using InfluencerConnect.Domain.ApplicationUsers;
 using InfluencerConnect.Domain.Brands.Events;
-using InfluencerConnect.Domain.Shared;
+using InfluencerConnect.Domain.Influencers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,33 +11,32 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Domain.Brands;
 public sealed class Brand : Entity
 {
-    private Brand(){}
-    private Brand(Guid id,
-        ApplicationUser applicationUser,
-       BrandInfo brandInfo,
-        List<SocialMediaProfile> socialMediaProfile) : base(id)
+    private Brand() { }
+    private Brand(
+         ApplicationUser applicationUser,
+         BrandInfo brandInfo,
+         ICollection<BrandSocialMediaProfile> brandSocialMediaProfile) : base(Guid.NewGuid())
     {
         ApplicationUserId = applicationUser.Id;
         ApplicationUser = applicationUser;
         BrandInfo = brandInfo;
-        SocialMediaProfile = socialMediaProfile ?? new List<SocialMediaProfile>();
+        BrandSocialMediaProfile = brandSocialMediaProfile ?? [];
     }
     public string ApplicationUserId { get; set; }
     public ApplicationUser ApplicationUser { get; set; }
     public BrandInfo BrandInfo { get; set; }
-    public List<SocialMediaProfile> SocialMediaProfile { get; set; } = [];
+    public ICollection<BrandSocialMediaProfile> BrandSocialMediaProfile { get; set; } = [];
 
     public static Brand Create(
         ApplicationUser applicationUser,
         BrandInfo brandInfo,
-        List<SocialMediaProfile> socialMediaProfile
+        ICollection<BrandSocialMediaProfile> brandSocialMediaProfile
         )
     {
         var brand = new Brand(
-            Guid.NewGuid(),
             applicationUser,
             brandInfo,
-            socialMediaProfile
+            brandSocialMediaProfile
             );
 
         brand.RaiseDomainEvent(new BrandCreatedDomainEvent(brand.Id));

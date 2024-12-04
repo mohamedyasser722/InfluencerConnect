@@ -1,5 +1,5 @@
-﻿using Bookify.Application.Abstractions.Behaviors;
-using FluentValidation;
+﻿using FluentValidation;
+using InfluencerConnect.Application.Abstractions.Behaviors;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

@@ -8,5 +8,6 @@ namespace InfluencerConnect.Domain.ApplicationUsers;
 public enum UserType
 {
     Influencer,
-    Brand
+    Brand,
+    Admin
 }

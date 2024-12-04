@@ -1,4 +1,7 @@
 
+
+using InfluencerConnect.Application;
+using InfluencerConnect.Infrastructure;
 namespace InfluencerConnect.Api;
 
 public class Program
@@ -12,6 +15,10 @@ public class Program
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
+
+
+        builder.Services.AddApplication();
+        builder.Services.AddInfrastructure(builder.Configuration);
 
         var app = builder.Build();
 

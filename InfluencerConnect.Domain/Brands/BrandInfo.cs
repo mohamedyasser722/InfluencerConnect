@@ -5,4 +5,4 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InfluencerConnect.Domain.Brands;
-public sealed record BrandInfo(string Name, string Description, string WebsiteUrl, string LogoUrl);
+public sealed record BrandInfo(string Name, string? Description, string? WebsiteUrl, string? LogoUrl);

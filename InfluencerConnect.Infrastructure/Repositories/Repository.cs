@@ -1,5 +1,4 @@
-﻿using Bookify.Infrastructure;
-using InfluencerConnect.Domain.Abstractions;
+﻿using InfluencerConnect.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace InfluencerConnect.Infrastructure.Repositories;
 
-internal abstract class Repository<T>
+public abstract class Repository<T>
     where T : Entity
 {
     protected readonly ApplicationDbContext _dbcontext;
     public Repository(ApplicationDbContext dbcontext)
     {
         _dbcontext = dbcontext;
+    }
+    protected async Task<IReadOnlyCollection<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbcontext
+            .Set<T>()
+            .ToListAsync(cancellationToken);
     }
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
@@ -27,5 +32,10 @@ internal abstract class Repository<T>
     {
          _dbcontext.Set<T>().Add(entity);
     }
-   
+    public void Update(T entity)
+    {
+        _dbcontext.Set<T>().Update(entity);
+    }
+
+
 }

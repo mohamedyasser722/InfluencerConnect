@@ -1,4 +1,5 @@
 ﻿using InfluencerConnect.Domain.Abstractions;
+using InfluencerConnect.Domain.Influencers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,9 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bookify.Infrastructure;
-public class ApplicationDbContext : DbContext, IUnitOfWork
+namespace InfluencerConnect.Infrastructure;
+public class ApplicationDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext, IUnitOfWork
 {
+    public DbSet<Influencer> Influencers { get; set; }
 
 
     private readonly IPublisher _publisher;

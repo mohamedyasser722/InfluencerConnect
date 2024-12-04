@@ -7,5 +7,4 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Domain.Influencers;
 public interface IInfluencerRepository
 {
-    Task<Influencer?> GetByIdAsync(Guid id);
 }

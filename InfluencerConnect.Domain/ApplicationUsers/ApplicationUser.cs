@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Domain.ApplicationUsers;
 public sealed class ApplicationUser : IdentityUser
 {
-    public Name Name { get; set; }
+    private ApplicationUser()
+    {
+        IsAccepted = false;
+    }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public UserType UserType { get; set; }
-    public BirthDate BirthDate { get; set; }
-    public IsAccepted IsAccepted { get; set; }
+    public bool IsAccepted { get; set; }
     // list of refreshtoken TODO
 }

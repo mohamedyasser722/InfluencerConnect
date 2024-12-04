@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bookify.Application.Abstractions.Behaviors;
+namespace InfluencerConnect.Application.Abstractions.Behaviors;
 public class ValidationBehavior<TRequest, TResponse>: IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseCommand
 {
