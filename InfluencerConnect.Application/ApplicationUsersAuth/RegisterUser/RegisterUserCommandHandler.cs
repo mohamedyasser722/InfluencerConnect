@@ -14,6 +14,9 @@ public class RegisterUserCommandHandler(UserManager<ApplicationUser> userManager
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     public async Task<Result<string>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
+        if(!UserTypeExtensions.IsValidForRegistration(request.UserType))
+            return Result.Failure<string>(ApplicationUserErrors.InvalidUserType);
+
         var newUser = new ApplicationUser
         {
             FirstName = request.FirstName,

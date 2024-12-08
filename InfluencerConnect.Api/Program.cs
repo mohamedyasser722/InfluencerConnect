@@ -1,5 +1,6 @@
 
 
+using InfluencerConnect.Api.Extensions;
 using InfluencerConnect.Application;
 using InfluencerConnect.Infrastructure;
 namespace InfluencerConnect.Api;
@@ -31,6 +32,7 @@ public class Program
             app.UseSwaggerUI();
             //app.MapOpenApi();
         }
+        app.UseCustomExceptionHandler();
 
         app.UseHttpsRedirection();
 

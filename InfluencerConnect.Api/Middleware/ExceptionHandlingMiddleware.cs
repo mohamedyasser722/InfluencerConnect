@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfluencerConnect.Api.Middleware;
 
+
 public class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
@@ -17,7 +18,7 @@ public class ExceptionHandlingMiddleware
     }
 
     public async Task InvokeAsync(HttpContext context)
-    {   
+    {
         try
         {
             await _next(context);

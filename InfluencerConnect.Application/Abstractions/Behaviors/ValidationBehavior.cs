@@ -2,11 +2,7 @@
 using InfluencerConnect.Application.Abstractions.Messaging;
 using InfluencerConnect.Application.Exceptions;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace InfluencerConnect.Application.Abstractions.Behaviors;
 public class ValidationBehavior<TRequest, TResponse>: IPipelineBehavior<TRequest, TResponse>
@@ -39,7 +35,7 @@ public class ValidationBehavior<TRequest, TResponse>: IPipelineBehavior<TRequest
 
         if (validationErrors.Any())
         {
-            throw new InfluencerConnect.Application.Exceptions.ValidationException(validationErrors);
+            throw new Exceptions.ValidationException(validationErrors);
         }
 
         return await next();

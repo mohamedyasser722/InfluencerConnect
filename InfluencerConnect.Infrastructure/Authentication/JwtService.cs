@@ -1,4 +1,5 @@
 ﻿using InfluencerConnect.Application.Abstractions.Authentication;
+using InfluencerConnect.Domain.Abstractions;
 using InfluencerConnect.Domain.ApplicationUsers;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -12,15 +13,15 @@ public class JwtService(UserManager<ApplicationUser> userManager, IJwtProvider j
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IJwtProvider _jwtProvider = jwtProvider;
-    public async Task<AuthResponse?> GetTokenAsync(string email, string password, CancellationToken cancellationToken = default)
+    public async Task<Result<AuthResponse>> GetTokenAsync(string email, string password, CancellationToken cancellationToken = default)
     {
         var user = await _userManager.FindByEmailAsync(email);
 
-        if(user == null) return null;
+        if(user == null) return Result.Failure<AuthResponse>(ApplicationUserErrors.InvalidCredentials);
 
         bool isValidPassword = await _userManager.CheckPasswordAsync(user, password);
 
-        if(!isValidPassword) return null;
+        if(!isValidPassword) return Result.Failure<AuthResponse>(ApplicationUserErrors.InvalidCredentials);
 
         // generate Jwt Token
 
