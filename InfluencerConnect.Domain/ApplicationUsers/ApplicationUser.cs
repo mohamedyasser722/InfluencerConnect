@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Domain.ApplicationUsers;
 public sealed class ApplicationUser : IdentityUser
 {
-    private ApplicationUser()
+    public ApplicationUser()
     {
+    }
+    public ApplicationUser(string firstName, string lastName, UserType userType, bool isAccepted)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        UserType = userType;
         IsAccepted = false;
     }
     public string FirstName { get; set; }

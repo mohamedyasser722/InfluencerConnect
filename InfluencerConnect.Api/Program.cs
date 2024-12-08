@@ -10,6 +10,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddSwagger();
+
         // Add services to the container.
 
         builder.Services.AddControllers();
@@ -25,7 +27,9 @@ public class Program
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            //app.MapOpenApi();
         }
 
         app.UseHttpsRedirection();

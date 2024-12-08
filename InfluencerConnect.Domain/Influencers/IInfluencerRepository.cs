@@ -7,4 +7,5 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Domain.Influencers;
 public interface IInfluencerRepository
 {
+    Task<List<Influencer>> GetAllWithDetailsAsync(CancellationToken cancellationToken = default);
 }

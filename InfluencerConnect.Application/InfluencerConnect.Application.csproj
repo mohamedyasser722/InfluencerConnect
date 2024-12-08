@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Influencers\" />
     <Folder Include="Brands\" />
+    <Folder Include="Pagination\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,23 @@
+﻿using InfluencerConnect.Api.Controllers.Auth.Contracts;
+using InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace InfluencerConnect.Api.Controllers.Auth;
+[Route("auth")]
+[ApiController]
+public class UserController(ISender sender) : ControllerBase
+{
+    private readonly ISender _sender = sender;
+
+    [HttpPost("register")]
+    public async Task<IActionResult> RegisterAsync(RegisterUserRequest request)
+    {
+        var command = new RegisterUserCommand(request.FirstName, request.LastName, request.Email, request.Password, request.UserType);
+
+        var response = await _sender.Send(command);
+
+        return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
+    }
+}

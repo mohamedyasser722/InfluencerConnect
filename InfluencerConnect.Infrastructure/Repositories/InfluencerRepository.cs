@@ -1,4 +1,5 @@
 ﻿using InfluencerConnect.Domain.Influencers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,4 +15,11 @@ public class InfluencerRepository : Repository<Influencer>, IInfluencerRepositor
         _dbcontext = dbcontext;
     }
 
+    public async Task<List<Influencer>> GetAllWithDetailsAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbcontext.Influencers
+             .Include(i => i.ApplicationUser)
+             .Include(i => i.InfluencerSocialMediaProfiles)
+             .ToListAsync(cancellationToken);
+    }
 }
