@@ -27,43 +27,61 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAuth();
-
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection")));
 
+        services.RegisterAppServicesDI(configuration);
+
+        services.AddAuth(configuration);
+
+
+        return services;
+    }
+    private static IServiceCollection RegisterAppServicesDI(this IServiceCollection services, IConfiguration configuration)
+    {
+        //services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
+
+        services.AddOptions<JwtOptions>()
+            .Bind(configuration.GetSection(JwtOptions.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddScoped<IUserContext, UserContext>();
+        services.AddScoped<IJwtService, JwtService>();
         services.AddTransient<IEmailService, EmailService>();
+
+        services.AddSingleton<IJwtProvider, JwtProvider>();
         services.AddScoped<IUnitOfWork>(services => services.GetRequiredService<ApplicationDbContext>());
+
+
         services.AddScoped<IInfluencerRepository, InfluencerRepository>();
 
         return services;
     }
 
-    private static IServiceCollection AddAuth(this IServiceCollection  services)
+    private static IServiceCollection AddAuth(this IServiceCollection  services, IConfiguration configuration)
     {
+
         // Register IHttpContextAccessor for accessing HTTP context
         services.AddHttpContextAccessor();
 
-        // Register ICurrentUserService with CurrentUserService implementation
-        services.AddScoped<IUserContext, UserContext>();
-        services.AddScoped<IJwtService, JwtService>();
-        services.AddSingleton<IJwtProvider, JwtProvider>();
 
-        services.AddIdentity(); 
-        services.AddJwtBearer();
+        services.AddIdentityAuth(); 
+        services.AddJwtBearerAuth(configuration);
         return services;
     }
 
-    private static IServiceCollection AddIdentity(this IServiceCollection services)
+    private static IServiceCollection AddIdentityAuth(this IServiceCollection services)
     {
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return services;
     }
-    private static IServiceCollection AddJwtBearer(this IServiceCollection services)
+    private static IServiceCollection AddJwtBearerAuth(this IServiceCollection services, IConfiguration configuration)
     {
+        var _jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>();
 
         services.AddAuthentication(services =>
         {
@@ -76,11 +94,11 @@ public static class DependencyInjection
                 services.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("D34D070C939D4A8D8F3AD1584EF3FF61")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtOptions!.Key)),
                     ValidateIssuer = true,
-                    ValidIssuer = "InfluencerConnect",
+                    ValidIssuer = _jwtOptions!.Issuer,
                     ValidateAudience = true,
-                    ValidAudience = "InfluencerConnect Users",
+                    ValidAudience = _jwtOptions.Audience,
                     ValidateLifetime = true,
                 };
             });

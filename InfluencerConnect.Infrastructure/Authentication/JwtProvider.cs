@@ -1,4 +1,5 @@
 ﻿using InfluencerConnect.Domain.ApplicationUsers;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InfluencerConnect.Infrastructure.Authentication;
-public class JwtProvider : IJwtProvider
+public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 {
+    private readonly JwtOptions _options = options.Value;
     public (string token, int expiresIn) GenerateToken(ApplicationUser user)
     {
         Claim[] claims = [
@@ -22,18 +24,18 @@ public class JwtProvider : IJwtProvider
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),  
                 new("role", user.UserType.ToString())
             ];
-        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("D34D070C939D4A8D8F3AD1584EF3FF61"));
+        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key));
 
         var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "InfluencerConnect",
-            audience: "InfluencerConnect Users",
+            issuer: _options.Issuer,
+            audience: _options.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(30),
+            expires: DateTime.UtcNow.AddMinutes(_options.ExpiryMinutes),
             signingCredentials: signingCredentials
         );
 
-        return (token: new JwtSecurityTokenHandler().WriteToken(token), expiresIn: 30 * 60);
+        return (token: new JwtSecurityTokenHandler().WriteToken(token), expiresIn: _options.ExpiryMinutes * 60);
     }
 }
