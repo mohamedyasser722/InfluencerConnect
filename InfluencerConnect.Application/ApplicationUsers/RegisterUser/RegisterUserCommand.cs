@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser;
+namespace InfluencerConnect.Application.ApplicationUsers.RegisterUser;
 public sealed record RegisterUserCommand(
     string FirstName,
     string LastName,

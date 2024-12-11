@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using InfluencerConnect.Application.ApplicationUsersAuth.Login;
+using InfluencerConnect.Application.ApplicationUsers.Login;
 
-namespace InfluencerConnect.Application.ApplicationUsersAuth.Login;
+namespace InfluencerConnect.Application.ApplicationUsers.Login;
 
 public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
 {

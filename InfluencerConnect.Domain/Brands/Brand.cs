@@ -14,37 +14,24 @@ public sealed class Brand : Entity
 {
     private Brand() { }
 
-    private Brand(
-        ApplicationUser applicationUser,
-        BrandInfo brandInfo,
-        ICollection<BrandSocialMediaProfile> brandSocialMediaProfile
-    ) 
+    private Brand(ApplicationUser applicationUser)
     {
         Id = applicationUser.Id;
         ApplicationUser = applicationUser ?? throw new ArgumentNullException(nameof(applicationUser));
-        BrandInfo = brandInfo;
-        BrandSocialMediaProfile = brandSocialMediaProfile ?? new List<BrandSocialMediaProfile>();
+        // Leave other properties uninitialized for now
     }
 
     public Guid Id { get; private set; }
     public ApplicationUser ApplicationUser { get; private set; }
-    public BrandInfo BrandInfo { get; private set; }
-    public ICollection<BrandSocialMediaProfile> BrandSocialMediaProfile { get; private set; }
+    public BrandInfo? BrandInfo { get; private set; }  // Nullable
+    public ICollection<BrandSocialMediaProfile>? BrandSocialMediaProfile { get; private set; }  // Nullable
 
-    public static Brand Create(
-        ApplicationUser applicationUser,
-        BrandInfo brandInfo,
-        ICollection<BrandSocialMediaProfile> brandSocialMediaProfile
-    )
+    public static Brand Create(ApplicationUser applicationUser)
     {
-        var brand = new Brand(
-            applicationUser,
-            brandInfo,
-            brandSocialMediaProfile
-        );
-
+        var brand = new Brand(applicationUser);
         brand.RaiseDomainEvent(new BrandCreatedDomainEvent(brand.Id));
         return brand;
     }
 }
+
 

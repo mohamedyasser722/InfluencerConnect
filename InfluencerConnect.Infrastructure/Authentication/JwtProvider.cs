@@ -22,7 +22,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
                 new(JwtRegisteredClaimNames.GivenName, user.FirstName),
                 new(JwtRegisteredClaimNames.FamilyName, user.LastName), 
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),  
-                new("role", user.UserType.ToString())
+                new(ClaimTypes.Role, user.UserType.ToString())
             ];
         var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key));
 
@@ -32,10 +32,10 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
             issuer: _options.Issuer,
             audience: _options.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_options.ExpiryMinutes),
+            expires: DateTime.UtcNow.AddMinutes(_options.ExpiryInMinutes),
             signingCredentials: signingCredentials
         );
 
-        return (token: new JwtSecurityTokenHandler().WriteToken(token), expiresIn: _options.ExpiryMinutes * 60);
+        return (token: new JwtSecurityTokenHandler().WriteToken(token), expiresIn: _options.ExpiryInMinutes * 60);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using InfluencerConnect.Api.Controllers.Auth.Contracts;
-using InfluencerConnect.Application.ApplicationUsersAuth.Login;
-using InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser;
+using InfluencerConnect.Application.ApplicationUsers.Login;
+using InfluencerConnect.Application.ApplicationUsers.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -13,56 +13,27 @@ public sealed class Influencer : Entity
 {
     private Influencer() { }
 
-    private Influencer(
-        ApplicationUser applicationUser,
-        BirthDate birthDate,
-        Gender gender,
-        PriceRange priceRange,
-        string bio,
-        string profilePictureUrl,
-        ICollection<InfluencerSocialMediaProfile> influencerSocialMediaProfiles
-    )
+    private Influencer(ApplicationUser applicationUser)
     {
         Id = applicationUser.Id;
         ApplicationUser = applicationUser ?? throw new ArgumentNullException(nameof(applicationUser));
-        BirthDate = birthDate;
-        Gender = gender;
-        PriceRange = priceRange;
-        Bio = bio;
-        ProfilePictureUrl = profilePictureUrl;
-        InfluencerSocialMediaProfiles = influencerSocialMediaProfiles ?? new List<InfluencerSocialMediaProfile>();
+        // Leave other properties uninitialized for now
     }
 
     public Guid Id { get; private set; }
     public ApplicationUser ApplicationUser { get; private set; }
-    public BirthDate BirthDate { get; private set; }
-    public Gender Gender { get; private set; }
-    public PriceRange PriceRange { get; private set; }
-    public string Bio { get; private set; }
-    public string ProfilePictureUrl { get; private set; }
-    public ICollection<InfluencerSocialMediaProfile> InfluencerSocialMediaProfiles { get; private set; }
+    public BirthDate? BirthDate { get; private set; }  // Nullable
+    public Gender? Gender { get; private set; } // Nullable
+    public PriceRange? PriceRange { get; private set; } // Nullable
+    public string? Bio { get; private set; }  // Nullable
+    public string? ProfilePictureUrl { get; private set; }  // Nullable
+    public ICollection<InfluencerSocialMediaProfile>? InfluencerSocialMediaProfiles { get; private set; }  // Nullable
 
-    public static Influencer Create(
-        ApplicationUser applicationUser,
-        BirthDate birthDate,
-        Gender gender,
-        PriceRange priceRange,
-        string bio,
-        string profilePictureUrl,
-        ICollection<InfluencerSocialMediaProfile> socialMediaProfiles
-    )
+    public static Influencer Create(ApplicationUser applicationUser)
     {
-        var influencer = new Influencer(
-            applicationUser,
-            birthDate,
-            gender,
-            priceRange,
-            bio,
-            profilePictureUrl,
-            socialMediaProfiles
-        );
-
+        var influencer = new Influencer(applicationUser);
         influencer.RaiseDomainEvent(new InfluencerCreatedDomainEvent(influencer.Id));
         return influencer;
     }
 }
+

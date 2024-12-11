@@ -165,7 +165,7 @@ namespace InfluencerConnect.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BrandInfo_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    BrandInfo_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     BrandInfo_Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     BrandInfo_WebsiteUrl = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     BrandInfo_LogoUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
@@ -186,10 +186,10 @@ namespace InfluencerConnect.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MinPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    MaxPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MinPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
+                    MaxPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     Bio = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     ProfilePictureUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },

@@ -159,7 +159,6 @@ namespace InfluencerConnect.Infrastructure.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePictureUrl")
@@ -372,8 +371,7 @@ namespace InfluencerConnect.Infrastructure.Migrations
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("BrandInfo")
-                        .IsRequired();
+                    b.Navigation("BrandInfo");
                 });
 
             modelBuilder.Entity("InfluencerConnect.Domain.Brands.BrandSocialMediaProfile", b =>
@@ -436,11 +434,9 @@ namespace InfluencerConnect.Infrastructure.Migrations
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("BirthDate")
-                        .IsRequired();
+                    b.Navigation("BirthDate");
 
-                    b.Navigation("PriceRange")
-                        .IsRequired();
+                    b.Navigation("PriceRange");
                 });
 
             modelBuilder.Entity("InfluencerConnect.Domain.Influencers.InfluencerSocialMediaProfile", b =>

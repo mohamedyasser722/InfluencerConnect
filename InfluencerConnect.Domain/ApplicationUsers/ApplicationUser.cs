@@ -12,9 +12,11 @@ public sealed class ApplicationUser : IdentityUser<Guid>
 {
     public ApplicationUser()
     {
+        Id = Guid.NewGuid();
     }
     public ApplicationUser(string firstName, string lastName, UserType userType, bool isAccepted)
     {
+        Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
         UserType = userType;

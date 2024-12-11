@@ -32,7 +32,7 @@ public class GetAllInfluencersQueryHandler : IQueryHandler<GetAllInfluencersQuer
             FullName: $"{influencer.ApplicationUser.FirstName} {influencer.ApplicationUser.LastName}",
             Bio: influencer.Bio,
             ProfilePictureUrl: influencer.ProfilePictureUrl,
-            Gender: influencer.Gender,
+            Gender: influencer.Gender.Value,
             Age: influencer.BirthDate.Age,
             PriceRange: influencer.PriceRange,
             SocialMediaProfiles: influencer.InfluencerSocialMediaProfiles.Select(s => new SocialMediaProfileResponse(
