@@ -13,5 +13,5 @@ public sealed record RegisterUserCommand(
     string LastName,
     string Email,
     string Password,
-    UserType UserType) : ICommand<string>;
+    UserType UserType) : ICommand<Guid>;
 

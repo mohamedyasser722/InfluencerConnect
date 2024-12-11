@@ -9,12 +9,5 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Infrastructure.Authentication;
 public sealed class UserContext(IHttpContextAccessor accessor) : IUserContext
 {
-    private readonly IHttpContextAccessor _httpContextAccessor = accessor;
-    public string UserId
-    {
-        get
-        {
-            return "TestUser";
-        }
-    }
+    public Guid UserId => throw new NotImplementedException();
 }

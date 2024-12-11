@@ -1,6 +1,7 @@
 ﻿using InfluencerConnect.Domain.Influencers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace InfluencerConnect.Infrastructure.Configurations;
 public class InfluencerConfigurations : IEntityTypeConfiguration<Influencer>
@@ -10,21 +11,11 @@ public class InfluencerConfigurations : IEntityTypeConfiguration<Influencer>
         // Define the table name
         builder.ToTable("Influencers");
 
-        // Primary Key
-        builder.HasKey(x => x.Id);
-
-        builder.Property(x => x.Id)
-            .ValueGeneratedNever(); 
-
-        // Relationships
-        builder.HasOne(i => i.ApplicationUser)
-            .WithOne()
-            .HasForeignKey<Influencer>(i => i.ApplicationUserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        // Properties
-        builder.Property(i => i.ApplicationUserId)
-            .IsRequired();
+        builder
+       .HasOne(i => i.ApplicationUser) // Influencer has one ApplicationUser
+       .WithOne(a => a.Influencer) // ApplicationUser has one Influencer
+       .HasForeignKey<Influencer>(i => i.Id) // Foreign key is the same as Id (primary key)
+       .IsRequired(); // The relationship is required
 
         builder.OwnsOne(i => i.PriceRange, pr =>
         {
@@ -68,8 +59,5 @@ public class InfluencerConfigurations : IEntityTypeConfiguration<Influencer>
             .HasConversion(
                 v => v.ToString(),  // Convert enum to string for the database
                 v => Enum.Parse<Gender>(v)); // Convert string to enum for the application
-
-        // Indexes (Optional for faster lookups)
-        builder.HasIndex(i => i.ApplicationUserId).IsUnique(true);
     }
 }

@@ -16,16 +16,11 @@ public class BrandConfigurations : IEntityTypeConfiguration<Brand>
     {
         builder.ToTable("Brands");
 
-        builder.HasKey(brand => brand.Id);
-
-        builder.Property(brand => brand.Id)
-            .ValueGeneratedNever();
-
-        // Relationships
-        builder.HasOne(i => i.ApplicationUser)
-            .WithOne()
-            .HasForeignKey<Brand>(i => i.ApplicationUserId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder
+       .HasOne(i => i.ApplicationUser) // Influencer has one ApplicationUser
+       .WithOne(a => a.Brand) // ApplicationUser has one Influencer
+       .HasForeignKey<Brand>(i => i.Id) // Foreign key is the same as Id (primary key)
+       .IsRequired(); // The relationship is required
 
         builder.OwnsOne(brand => brand.BrandInfo, brandInfo =>
         {
@@ -40,13 +35,9 @@ public class BrandConfigurations : IEntityTypeConfiguration<Brand>
                 .HasMaxLength(500);
         });
 
-
-
         builder.HasMany(brand => brand.BrandSocialMediaProfile)
             .WithOne()
             .HasForeignKey(socialMediaProfile => socialMediaProfile.BrandId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasIndex(i => i.ApplicationUserId).IsUnique(true);
     }
 }

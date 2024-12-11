@@ -4,6 +4,7 @@ namespace InfluencerConnect.Domain.Influencers;
 
 public sealed class InfluencerSocialMediaProfile : Entity
 {
+    public Guid Id { get; private set; }
     public Guid InfluencerId { get; init; }
     public string PlatformName { get; init; }
     public string AccountUserName { get; init; }
@@ -18,7 +19,7 @@ public sealed class InfluencerSocialMediaProfile : Entity
         string platformName,
         string accountUserName,
         string profileLink,
-        int followersCount) : base(Guid.NewGuid())
+        int followersCount)
     {
         if (InfluencerId == Guid.Empty)
             throw new ArgumentException("InfluencerId cannot be empty.", nameof(InfluencerId));
@@ -31,6 +32,7 @@ public sealed class InfluencerSocialMediaProfile : Entity
         if (followersCount < 0)
             throw new ArgumentOutOfRangeException(nameof(followersCount), "Followers count cannot be negative.");
 
+        Id = Guid.NewGuid();
         InfluencerId = influencerId;
         PlatformName = platformName;
         AccountUserName = accountUserName;

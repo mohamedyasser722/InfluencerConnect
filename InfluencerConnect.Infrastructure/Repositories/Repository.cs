@@ -22,12 +22,6 @@ public abstract class Repository<T>
             .Set<T>()
             .ToListAsync(cancellationToken);
     }
-    public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return await _dbcontext
-            .Set<T>()
-            .FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
-    }
     public void Add(T entity)
     {
          _dbcontext.Set<T>().Add(entity);

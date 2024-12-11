@@ -35,6 +35,7 @@ public class InfluencerSocialMediaProfileConfigurations : IEntityTypeConfigurati
 
         builder.HasOne<Influencer>()
             .WithMany(x => x.InfluencerSocialMediaProfiles)
-            .HasForeignKey(x => x.InfluencerId);
+            .HasForeignKey(x => x.InfluencerId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

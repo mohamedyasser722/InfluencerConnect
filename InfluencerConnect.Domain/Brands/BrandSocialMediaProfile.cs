@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Domain.Brands;
 public class BrandSocialMediaProfile : Entity
 {
+    public Guid Id { get; private set; }
     public Guid BrandId { get; init; }
     public string PlatformName { get; init; }
     public string AccountUserName { get; init; }
@@ -22,7 +23,7 @@ public class BrandSocialMediaProfile : Entity
         string platformName,
         string accountUserName,
         string profileLink,
-        int followersCount) : base(Guid.NewGuid())
+        int followersCount)
     {
         if (BrandId == Guid.Empty)
             throw new ArgumentException("BrandId cannot be empty.", nameof(BrandId));
@@ -35,6 +36,7 @@ public class BrandSocialMediaProfile : Entity
         if (followersCount < 0)
             throw new ArgumentOutOfRangeException(nameof(followersCount), "Followers count cannot be negative.");
 
+        Id = Guid.NewGuid();
         BrandId = influencerId;
         PlatformName = platformName;
         AccountUserName = accountUserName;

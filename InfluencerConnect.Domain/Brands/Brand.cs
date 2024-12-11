@@ -9,39 +9,42 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InfluencerConnect.Domain.Brands;
+
 public sealed class Brand : Entity
 {
     private Brand() { }
+
     private Brand(
-         ApplicationUser applicationUser,
-         BrandInfo brandInfo,
-         ICollection<BrandSocialMediaProfile> brandSocialMediaProfile) : base(Guid.NewGuid())
+        ApplicationUser applicationUser,
+        BrandInfo brandInfo,
+        ICollection<BrandSocialMediaProfile> brandSocialMediaProfile
+    ) 
     {
-        ApplicationUserId = applicationUser.Id;
-        ApplicationUser = applicationUser;
+        Id = applicationUser.Id;
+        ApplicationUser = applicationUser ?? throw new ArgumentNullException(nameof(applicationUser));
         BrandInfo = brandInfo;
-        BrandSocialMediaProfile = brandSocialMediaProfile ?? [];
+        BrandSocialMediaProfile = brandSocialMediaProfile ?? new List<BrandSocialMediaProfile>();
     }
-    public string ApplicationUserId { get; set; }
-    public ApplicationUser ApplicationUser { get; set; }
-    public BrandInfo BrandInfo { get; set; }
-    public ICollection<BrandSocialMediaProfile> BrandSocialMediaProfile { get; set; } = [];
+
+    public Guid Id { get; private set; }
+    public ApplicationUser ApplicationUser { get; private set; }
+    public BrandInfo BrandInfo { get; private set; }
+    public ICollection<BrandSocialMediaProfile> BrandSocialMediaProfile { get; private set; }
 
     public static Brand Create(
         ApplicationUser applicationUser,
         BrandInfo brandInfo,
         ICollection<BrandSocialMediaProfile> brandSocialMediaProfile
-        )
+    )
     {
         var brand = new Brand(
             applicationUser,
             brandInfo,
             brandSocialMediaProfile
-            );
+        );
 
         brand.RaiseDomainEvent(new BrandCreatedDomainEvent(brand.Id));
-
         return brand;
     }
-
 }
+

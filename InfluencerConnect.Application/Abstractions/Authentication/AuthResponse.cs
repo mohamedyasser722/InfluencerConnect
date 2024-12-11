@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Application.Abstractions.Authentication;
 public sealed record AuthResponse
 (
-    string Id,
+    Guid Id,
     string? Email,
     string FirstName,
     string LastName,

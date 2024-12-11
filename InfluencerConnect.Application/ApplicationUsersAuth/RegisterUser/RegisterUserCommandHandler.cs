@@ -9,16 +9,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser;
-public class RegisterUserCommandHandler(UserManager<ApplicationUser> userManager) : ICommandHandler<RegisterUserCommand, string>
+public class RegisterUserCommandHandler(UserManager<ApplicationUser> userManager) : ICommandHandler<RegisterUserCommand, Guid>
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
-    public async Task<Result<string>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         if(!UserTypeExtensions.IsValidForRegistration(request.UserType))
-            return Result.Failure<string>(ApplicationUserErrors.InvalidUserType);
+            return Result.Failure<Guid>(ApplicationUserErrors.InvalidUserType);
 
         var newUser = new ApplicationUser
         {
+            Id = Guid.NewGuid(),
             FirstName = request.FirstName,
             LastName = request.LastName,
             UserName = request.Email.Split('@')[0],
@@ -31,7 +32,7 @@ public class RegisterUserCommandHandler(UserManager<ApplicationUser> userManager
         if (!result.Succeeded)
         {
             var error = result.Errors.FirstOrDefault();
-            return Result.Failure<string>(new Error(error.Code, error.Description));
+            return Result.Failure<Guid>(new Error(error.Code, error.Description));
         }
 
         return Result.Success(newUser.Id);

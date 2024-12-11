@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace InfluencerConnect.Application.Abstractions.Authentication;
 public interface IUserContext
 {
-    string UserId { get; }
+    Guid UserId { get; }
 }

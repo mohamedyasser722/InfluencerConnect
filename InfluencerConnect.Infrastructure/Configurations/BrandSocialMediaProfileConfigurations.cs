@@ -36,7 +36,8 @@ public class BrandSocialMediaProfileConfigurations : IEntityTypeConfiguration<Br
 
         builder.HasOne<Brand>()
             .WithMany(x => x.BrandSocialMediaProfile)
-            .HasForeignKey(x => x.BrandId);
+            .HasForeignKey(x => x.BrandId)
+            .OnDelete(DeleteBehavior.Cascade);
 
     }
 }

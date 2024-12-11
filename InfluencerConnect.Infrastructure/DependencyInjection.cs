@@ -74,7 +74,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddIdentityAuth(this IServiceCollection services)
     {
-        services.AddIdentity<ApplicationUser, IdentityRole>()
+        services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return services;

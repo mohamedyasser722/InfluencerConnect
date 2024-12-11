@@ -7,8 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace InfluencerConnect.Domain.Influencers;
+
 public sealed class Influencer : Entity
 {
     private Influencer() { }
@@ -21,26 +21,26 @@ public sealed class Influencer : Entity
         string bio,
         string profilePictureUrl,
         ICollection<InfluencerSocialMediaProfile> influencerSocialMediaProfiles
-    ) : base(Guid.NewGuid())
+    )
     {
-        ApplicationUserId = applicationUser.Id;
-        ApplicationUser = applicationUser;
+        Id = applicationUser.Id;
+        ApplicationUser = applicationUser ?? throw new ArgumentNullException(nameof(applicationUser));
         BirthDate = birthDate;
         Gender = gender;
         PriceRange = priceRange;
         Bio = bio;
         ProfilePictureUrl = profilePictureUrl;
-        InfluencerSocialMediaProfiles = influencerSocialMediaProfiles ?? [];
+        InfluencerSocialMediaProfiles = influencerSocialMediaProfiles ?? new List<InfluencerSocialMediaProfile>();
     }
 
-    public string ApplicationUserId { get; private set; }
+    public Guid Id { get; private set; }
     public ApplicationUser ApplicationUser { get; private set; }
     public BirthDate BirthDate { get; private set; }
     public Gender Gender { get; private set; }
     public PriceRange PriceRange { get; private set; }
     public string Bio { get; private set; }
     public string ProfilePictureUrl { get; private set; }
-    public ICollection<InfluencerSocialMediaProfile> InfluencerSocialMediaProfiles { get; private set; } = [];
+    public ICollection<InfluencerSocialMediaProfile> InfluencerSocialMediaProfiles { get; private set; }
 
     public static Influencer Create(
         ApplicationUser applicationUser,
