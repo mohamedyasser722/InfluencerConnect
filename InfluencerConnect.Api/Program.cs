@@ -1,12 +1,16 @@
 
 
+using Hangfire;
 using InfluencerConnect.Api.Extensions;
 using InfluencerConnect.Application;
 using InfluencerConnect.Infrastructure;
+using InfluencerConnect.Infrastructure.Hangfire;
+using System.Runtime.CompilerServices;
 namespace InfluencerConnect.Api;
 
 public class Program
 {
+   
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +39,8 @@ public class Program
         app.UseCustomExceptionHandler();
 
         app.UseHttpsRedirection();
+
+        //builder.Services.AddHangfire(app);
 
         app.UseAuthorization();
 

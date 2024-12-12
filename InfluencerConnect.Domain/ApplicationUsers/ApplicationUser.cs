@@ -29,5 +29,6 @@ public sealed class ApplicationUser : IdentityUser<Guid>
 
     public Influencer? Influencer { get; set; }
     public Brand? Brand { get; set; }
-    // list of refreshtoken TODO
+
+    public List<RefreshToken> RefreshTokens { get; set; } = [];
 }

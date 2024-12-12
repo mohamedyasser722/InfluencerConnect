@@ -42,5 +42,36 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         builder.Property(u => u.IsAccepted)
         .HasDefaultValue(false)
         .IsRequired();
+
+
+        builder.OwnsMany(u => u.RefreshTokens, refreshToken =>
+        {
+            // Configure the primary key for RefreshToken
+            refreshToken.HasKey(rt => rt.Token);
+
+            // Map RefreshToken properties to columns
+            refreshToken.Property(rt => rt.Token)
+                        .IsRequired()
+                        .HasMaxLength(500); // Adjust length if needed
+
+            refreshToken.Property(rt => rt.ExpiresOn)
+                        .IsRequired();
+
+            refreshToken.Property(rt => rt.CreatedOn)
+                        .IsRequired();
+
+            refreshToken.Property(rt => rt.RevokedOn)
+                        .IsRequired(false); // Nullable
+
+            // Configure the table name for the owned type
+            refreshToken.ToTable("RefreshTokens");
+
+            // Map foreign key relationship
+            refreshToken.WithOwner()
+                        .HasForeignKey("ApplicationUserId"); // Optional if using conventions
+
+            // Index for faster queries (important for scenarios with multiple devices)
+            refreshToken.HasIndex("ApplicationUserId");
+        });
     }
 }

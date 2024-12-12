@@ -30,4 +30,6 @@ public class UserController(ISender sender) : ControllerBase
 
         return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
     }
+
+
 }

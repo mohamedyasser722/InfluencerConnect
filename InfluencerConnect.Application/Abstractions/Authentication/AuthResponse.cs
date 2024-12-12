@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InfluencerConnect.Domain.ApplicationUsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,9 @@ public sealed record AuthResponse
     string? Email,
     string FirstName,
     string LastName,
+    string UserType,
     string Token,
-    int ExpiresIn
+    int ExpiresIn,
+    string RefreshToken,
+    DateTime RefreshTokenExpiration
 );

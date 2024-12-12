@@ -4,6 +4,7 @@ using InfluencerConnect.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfluencerConnect.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241211201700_AddedRefreshTokenTable")]
+    partial class AddedRefreshTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +149,7 @@ namespace InfluencerConnect.Infrastructure.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.ToTable("BrandSocialMediaProfile", (string)null);
+                    b.ToTable("BrandSocialMediaProfile");
                 });
 
             modelBuilder.Entity("InfluencerConnect.Domain.Influencers.Influencer", b =>
@@ -197,7 +200,7 @@ namespace InfluencerConnect.Infrastructure.Migrations
 
                     b.HasIndex("InfluencerId");
 
-                    b.ToTable("InfluencerSocialMediaProfile", (string)null);
+                    b.ToTable("InfluencerSocialMediaProfile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -396,7 +399,7 @@ namespace InfluencerConnect.Infrastructure.Migrations
 
                             b1.HasKey("BrandId");
 
-                            b1.ToTable("Brands", (string)null);
+                            b1.ToTable("Brands");
 
                             b1.WithOwner()
                                 .HasForeignKey("BrandId");
@@ -436,7 +439,7 @@ namespace InfluencerConnect.Infrastructure.Migrations
 
                             b1.HasKey("InfluencerId");
 
-                            b1.ToTable("Influencers", (string)null);
+                            b1.ToTable("Influencers");
 
                             b1.WithOwner()
                                 .HasForeignKey("InfluencerId");
@@ -459,7 +462,7 @@ namespace InfluencerConnect.Infrastructure.Migrations
 
                             b1.HasKey("InfluencerId");
 
-                            b1.ToTable("Influencers", (string)null);
+                            b1.ToTable("Influencers");
 
                             b1.WithOwner()
                                 .HasForeignKey("InfluencerId");

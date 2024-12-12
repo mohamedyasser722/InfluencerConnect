@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace InfluencerConnect.Infrastructure.Authentication;
-public class JwtOptions
+public sealed record JwtOptions
 {
     
     public static readonly string SectionName  = "Jwt";
@@ -14,4 +14,12 @@ public class JwtOptions
     [Required]
     [Range(1, int.MaxValue)]
     public int ExpiryInMinutes { get; init; }
+}
+
+public sealed record RefreshTokenOptions
+{
+    public static readonly string SectionName = "RefreshToken";
+    [Required]
+    [Range(1, int.MaxValue)]
+    public int RefreshTokenExpiryInDays { get; init; }
 }

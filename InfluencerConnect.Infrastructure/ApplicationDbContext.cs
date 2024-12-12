@@ -16,6 +16,7 @@ public class ApplicationDbContext : Microsoft.AspNetCore.Identity.EntityFramewor
 {
     public DbSet<Influencer> Influencers { get; set; }
     public DbSet<Brand> Brands { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     private readonly IPublisher _publisher;
 

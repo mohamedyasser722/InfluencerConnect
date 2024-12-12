@@ -21,6 +21,9 @@ using InfluencerConnect.Application.Abstractions.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
+using Hangfire;
+using InfluencerConnect.Infrastructure.Hangfire;
+using Microsoft.AspNetCore.Builder;
 
 namespace InfluencerConnect.Infrastructure;
 public static class DependencyInjection
@@ -35,8 +38,23 @@ public static class DependencyInjection
 
         services.AddAuth(configuration);
 
+        //services.AddHangFire(configuration);
+
 
         return services;
+    }
+    private static IServiceCollection AddHangFire(this IServiceCollection Services, IConfiguration Configuration, WebApplication app)
+    {
+        Services.AddHangfire(config => config
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection")));
+
+        // Add the processing server as IHostedService
+        Services.AddHangfireServer();
+
+        return Services;
     }
     private static IServiceCollection RegisterAppServicesDI(this IServiceCollection services, IConfiguration configuration)
     {
@@ -44,6 +62,11 @@ public static class DependencyInjection
 
         services.AddOptions<JwtOptions>()
             .Bind(configuration.GetSection(JwtOptions.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddOptions<RefreshTokenOptions>()
+            .Bind(configuration.GetSection(RefreshTokenOptions.SectionName))
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
@@ -75,7 +98,8 @@ public static class DependencyInjection
     private static IServiceCollection AddIdentityAuth(this IServiceCollection services)
     {
         services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
         return services;
     }
