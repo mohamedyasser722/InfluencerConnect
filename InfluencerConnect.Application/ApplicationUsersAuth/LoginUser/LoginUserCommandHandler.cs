@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfluencerConnect.Application.ApplicationUsers.Login;
+namespace InfluencerConnect.Application.ApplicationUsersAuth.Login;
 public sealed class LoginUserCommandHandler(IJwtService jwtService) : ICommandHandler<LoginUserCommand, AuthResponse>
 {
     private readonly IJwtService _jwtService = jwtService;

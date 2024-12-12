@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfluencerConnect.Application.ApplicationUsers.RegisterUser.Events;
+namespace InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser.Events;
 internal class BrandRegisterDomainEventHandler
 {
 }

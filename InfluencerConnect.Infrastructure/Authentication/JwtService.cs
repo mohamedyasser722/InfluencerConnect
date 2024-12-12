@@ -64,6 +64,30 @@ public class JwtService(
 
     }
 
+    public async Task<Result<bool>> RevokeRefreshTokenAsync(string token, string refreshToken, CancellationToken cancellationToken = default)
+    {
+        var userId = _jwtProvider.ValidateToken(token);
+
+        if (userId == null)
+            return Result.Failure<bool>(ApplicationUserErrors.InvalidToken);
+        // Find the user by ID
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user is null)
+            return Result.Failure<bool>(ApplicationUserErrors.UserNotFound);
+
+        // Validate the refresh token
+        RefreshToken userRefreshToken = user.RefreshTokens.SingleOrDefault(rt => rt.Token == refreshToken && rt.IsActive);
+        if (userRefreshToken is null)
+            return Result.Failure<bool>(ApplicationUserErrors.InvalidRefreshToken);
+
+        // Invalidate the old refresh token
+        userRefreshToken.RevokedOn = DateTime.UtcNow; // Mark it as revoked
+
+        // Update the user with the new refresh token
+        await _userManager.UpdateAsync(user);
+
+        return true;
+    }
 
     private async Task<Result<AuthResponse>> GenerateAuthResponseAsync(ApplicationUser user, CancellationToken cancellationToken)
     {
@@ -109,4 +133,5 @@ public class JwtService(
 
         return (refreshToken, refreshTokenExpiry);
     }
+
 }

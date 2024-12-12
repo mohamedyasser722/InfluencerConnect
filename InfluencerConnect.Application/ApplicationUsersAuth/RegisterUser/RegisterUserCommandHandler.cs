@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfluencerConnect.Application.ApplicationUsers.RegisterUser;
+namespace InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser;
 public class RegisterUserCommandHandler(UserManager<ApplicationUser> userManager) : ICommandHandler<RegisterUserCommand, Guid>
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfluencerConnect.Application.ApplicationUsers.RegisterUser;
+namespace InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser;
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {
     public RegisterUserCommandValidator()
