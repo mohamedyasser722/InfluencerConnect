@@ -2,6 +2,7 @@
 
 using Hangfire;
 using InfluencerConnect.Api.Extensions;
+using InfluencerConnect.Api.Middleware;
 using InfluencerConnect.Application;
 using InfluencerConnect.Infrastructure;
 using InfluencerConnect.Infrastructure.Hangfire;
@@ -42,6 +43,8 @@ public class Program
 
         //builder.Services.AddHangfire(app);
 
+        app.UseTokenValidationMiddleware();
+        app.UseAuthorization();
         app.UseAuthorization();
 
 

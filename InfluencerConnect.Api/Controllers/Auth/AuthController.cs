@@ -1,5 +1,6 @@
 ﻿using InfluencerConnect.Api.Controllers.Auth.Contracts;
 using InfluencerConnect.Application.ApplicationUsersAuth.Login;
+using InfluencerConnect.Application.ApplicationUsersAuth.Logout;
 using InfluencerConnect.Application.ApplicationUsersAuth.RefreshToken;
 using InfluencerConnect.Application.ApplicationUsersAuth.RegisterUser;
 using InfluencerConnect.Application.ApplicationUsersAuth.RevokeRefreshToken;
@@ -32,6 +33,16 @@ public class AuthController(ISender sender) : ControllerBase
 
         return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
     }
+    [HttpPost("logout")]
+    public async Task<IActionResult> LogoutAsync(LogoutRequest request)
+    {
+        var command = new LogoutCommand(request.Token, request.RefreshToken);
+        var response = await _sender.Send(command);
+
+        return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
+    }
+
+
     [HttpPost("refresh")]
     public async Task<IActionResult> RefreshAsync(RefreshTokenRequest request)
     {

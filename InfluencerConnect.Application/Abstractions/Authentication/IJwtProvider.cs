@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfluencerConnect.Infrastructure.Authentication;
+namespace InfluencerConnect.Application.Abstractions.Authentication;
 public interface IJwtProvider
 {
     (string token, int expiresIn) GenerateToken (ApplicationUser user);

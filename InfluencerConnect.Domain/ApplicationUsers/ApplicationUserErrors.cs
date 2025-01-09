@@ -16,4 +16,5 @@ public static class ApplicationUserErrors
     public static readonly Error InvalidRefreshToken = new("invalid_refresh_token", "Invalid refresh token");
     public static readonly Error ExpiredRefreshToken = new("expired_refresh_token", "Refresh token has expired");
     public static readonly Error UserNotFound = new("user_not_found", "User not found");
+    public static readonly Error FailedUpdateRefreshTokenState = new("failed_update_refresh_token_state", "Failed to update refresh token state");
 }

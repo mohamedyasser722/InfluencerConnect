@@ -1,4 +1,5 @@
-﻿using InfluencerConnect.Domain.ApplicationUsers;
+﻿using InfluencerConnect.Application.Abstractions.Authentication;
+using InfluencerConnect.Domain.ApplicationUsers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -50,8 +51,11 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
             {
                 IssuerSigningKey = symmetricSecurityKey,
                 ValidateIssuerSigningKey = true,
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuer = true,
+                ValidIssuer = _options.Issuer,
+                ValidAudience = _options.Audience,
+                ValidateAudience = true,
+                ValidateLifetime =  true,
                 ClockSkew = TimeSpan.Zero
             }, out SecurityToken validatedToken);
 

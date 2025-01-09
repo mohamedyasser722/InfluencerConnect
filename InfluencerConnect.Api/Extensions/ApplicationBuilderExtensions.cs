@@ -10,4 +10,8 @@ public static class ApplicationBuilderExtensions
     {
         app.UseMiddleware<ExceptionHandlingMiddleware>();
     }
+    public static void UseTokenValidationMiddleware(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<TokenValidationMiddleware>();
+    }
 }

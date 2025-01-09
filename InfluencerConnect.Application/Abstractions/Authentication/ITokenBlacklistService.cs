@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InfluencerConnect.Application.Abstractions.Authentication;
-public interface IAuthenticationService
+public interface ITokenBlacklistService
 {
+    Task BlacklistTokenAsync(string token, DateTime expiryDate);
+    Task<bool> IsTokenBlacklistedAsync(string token);
 }

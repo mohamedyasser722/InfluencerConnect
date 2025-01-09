@@ -73,6 +73,9 @@ public static class DependencyInjection
         services.AddScoped<IUserContext, UserContext>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddTransient<IEmailService, EmailService>();
+        services.AddScoped<ITokenBlacklistService, TokenBlacklistService>();
+        services.AddMemoryCache();
+
 
         services.AddSingleton<IJwtProvider, JwtProvider>();
         services.AddScoped<IUnitOfWork>(services => services.GetRequiredService<ApplicationDbContext>());
